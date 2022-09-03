@@ -16,7 +16,7 @@ parser.add_argument("--gfpgan-cpu", action='store_true', help="run GFPGAN on cpu
 parser.add_argument("--gfpgan-dir", type=str, help="GFPGAN directory", default=('./src/gfpgan' if os.path.exists('./src/gfpgan') else './GFPGAN')) # i disagree with where you're putting it but since all guidefags are doing it this way, there you go
 parser.add_argument("--gfpgan-gpu", type=int, help="run GFPGAN on specific gpu (overrides --gpu) ", default=0)
 parser.add_argument("--gpu", type=int, help="choose which GPU to use if you have multiple", default=0)
-parser.add_argument("--grid-format", type=str, help="png for lossless png files; jpg:quality for lossy jpeg; webp:quality for lossy webp, or webp:-compression for lossless webp", default="jpg:95")
+parser.add_argument("--grid-format", type=str, help="png for lossless png files; jpg:quality for lossy jpeg; webp:quality for lossy webp, or webp:-compression for lossless webp", default="webp:60")
 parser.add_argument("--inbrowser", action='store_true', help="automatically launch the interface in a new tab on the default browser", default=False)
 parser.add_argument("--ldsr-dir", type=str, help="LDSR directory", default=('./src/latent-diffusion' if os.path.exists('./src/latent-diffusion') else './LDSR'))
 parser.add_argument("--n_rows", type=int, default=-1, help="rows in the grid; use -1 for autodetect and 0 for n_rows to be same as batch_size (default: -1)",)
@@ -609,7 +609,7 @@ def save_sample(image, sample_path_i, filename, jpg_sample, prompts, seeds, widt
             metadata.add_text("SD:GFPGAN", str(use_GFPGAN and GFPGAN is not None))
             image.save(f"{filename_i}.png", pnginfo=metadata)
         else:
-            image.save(f"{filename_i}.png")
+            image.save(f"{filename_i}.webp", 'webp', quality=grid_quality)
     else:
         image.save(f"{filename_i}.jpg", 'jpeg', quality=100, optimize=True)
     if write_info_files or write_sample_info_to_log_file:
