@@ -1,11 +1,5 @@
 @echo off
-
-:: copy over the first line from environment.yaml, e.g. name: ldm, and take the second word after splitting by ":" delimiter 
-set /p first_line=< environment.yaml  
-for /f "tokens=2 delims=:" %%i in ("%first_line%") do set untrimmed_conda_env_name=%%i
-:: remove whitespaces
-for /f "tokens=* delims= " %%a in ("%untrimmed_conda_env_name%") do set conda_env_name=%%a
-echo Environment name is set as %conda_env_name% as per environment.yaml
+set conda_env_name=ldm
 
 :: Put the path to conda directory after "=" sign if it's installed at non-standard path:
 set custom_conda_path=
